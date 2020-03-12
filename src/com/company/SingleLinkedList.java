@@ -74,7 +74,7 @@ public class SingleLinkedList {
     }
 
     //更新
-    public void uopdate(HeroNode newHeroNode){
+    public void update(HeroNode newHeroNode){
         if(head.next==null){
             System.out.println("链表为空");
             return;
@@ -151,19 +151,3 @@ public class SingleLinkedList {
 }
 
 // 定义节点，每个HeroNode都是一个节点
-class HeroNode {
-    public int no;
-    public String name;
-    public String nickName;
-    public HeroNode next;
-
-    public HeroNode(int no, String name, String nickName) {
-        this.no = no;
-        this.nickName = nickName;
-        this.name = name;
-    }
-
-    public String toString() {
-        return "HeroNode [no=" + no + ",name=" + name + "nickname=" + nickName + "]";
-    }
-}

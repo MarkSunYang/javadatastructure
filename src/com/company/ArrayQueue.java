@@ -71,6 +71,51 @@ public class ArrayQueue {
         rear=-1;  //指向队列尾，
     }
 
+    /**
+     * 获取链表有效节点的个数
+     * @param head 链表头
+     * @return
+     */
+    public static int getLength(HeroNode head){
+        if(head.next==null)
+        {
+            return 0;
+        }
+        int length=0;
+        HeroNode cur=head.next;
+        while(cur!=null){
+            length++;
+            cur=cur.next;
+        }
+        return length;
+    }
+
+    /**
+     * 查找单链表中的倒数第k个节点
+     * 先把链表从头到尾遍历，得到链表的总的长度 getLength()
+     * 得到size后，我们从链表中的第一个开始遍历(size-index)个
+     * 如果找到了，返回该节点，否则返回null
+     * @param
+     * @return
+     */
+    public static HeroNode findLastIndexNode(HeroNode head,int index){
+        if(head.next==null){
+            return null;
+        }
+        //第一次遍历得到链表长度
+        int size=getLength(head);
+        //第二次变量 size - index 位置，
+        if(index<=0 || index>size){
+            return null;
+        }
+        HeroNode cur=head.next;
+        for (int i=0;i<size-index;i++){
+            cur=cur.next;
+        }
+        return cur;
+
+    }
+
     // 入队列
     public void enQueue(int n){
         // 判断队列是否满
