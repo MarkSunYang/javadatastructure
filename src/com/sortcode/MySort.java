@@ -9,31 +9,31 @@ public class MySort {
         //region 测试8w条数据用
 
         //测试8w条数据的时间复杂度
-        int[] arr=new int[80000];
-        for (int i=0;i< 80000;i++) {
-            arr[i]=(int)(Math.random()*80000);
-        }
-
-        //排序前时间
-        Date date1=new Date();
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(simpleDateFormat.format(date1));
-        BubbleSort(arr);
-
-        //排序后时间
-        Date date2=new Date();
-        SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(simpleDateFormat2.format(date2));
+//        int[] arr=new int[80000];
+//        for (int i=0;i< 80000;i++) {
+//            arr[i]=(int)(Math.random()*80000);
+//        }
+//
+//        //排序前时间
+//        Date date1=new Date();
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        System.out.println(simpleDateFormat.format(date1));
+//        BubbleSort(arr);
+//
+//        //排序后时间
+//        Date date2=new Date();
+//        SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        System.out.println(simpleDateFormat2.format(date2));
 
         //endregion
 
         //region 写代码用
 
-//        int[] arr=new int[]{3,9,-1,10,20};
-//        BubbleSortOptimize(arr);
-//        for (int i=0;i< arr.length;i++) {
-//            System.out.print(arr[i] + "  ");
-//        }
+        int[] arr=new int[]{3,9,-1,10,20};
+        selectedSort(arr);
+        for (int i=0;i< arr.length;i++) {
+            System.out.print(arr[i] + "  ");
+        }
 
         //endregion
 
@@ -90,6 +90,32 @@ public class MySort {
     //endregion
 
     //region 选择排序
+
+    /**
+     *
+     * @param arr
+     */
+    public static void selectedSort(int[] arr){
+        for (int i=0;i<arr.length;i++) {
+            int minIndex=i;//假设最小的值得索引为0
+            int min=arr[i];//最小值
+
+            for (int j=i+1;j<arr.length;j++){
+                 if(min>arr[j]) //如果假设的最小值比后面的数大那么交换位置
+                 {
+                     min=arr[j];//重置最小值
+                     minIndex=j;//重置minIndex
+                 }
+             }
+
+            //将最小值 放在arr[0],
+            if(minIndex!=i){
+                arr[minIndex]=arr[i];
+                arr[i]=min;
+            }
+
+        }
+    }
 
     //endregion
 
