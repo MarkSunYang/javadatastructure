@@ -18,7 +18,7 @@ public class MySort {
 //        Date date1=new Date();
 //        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        System.out.println(simpleDateFormat.format(date1));
-//        BubbleSort(arr);
+//        selectedSort(arr);
 //
 //        //排序后时间
 //        Date date2=new Date();
@@ -92,10 +92,11 @@ public class MySort {
     //region 选择排序
 
     /**
-     *
+     *选择排序
      * @param arr
      */
     public static void selectedSort(int[] arr){
+
         for (int i=0;i<arr.length;i++) {
             int minIndex=i;//假设最小的值得索引为0
             int min=arr[i];//最小值
@@ -115,6 +116,10 @@ public class MySort {
             }
 
         }
+    }
+
+    public static void selectedSortOptimize(int[] arr){
+
     }
 
     //endregion
