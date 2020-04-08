@@ -18,7 +18,7 @@ public class MySort {
 //        Date date1=new Date();
 //        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        System.out.println(simpleDateFormat.format(date1));
-//        selectedSort(arr);
+//        insertSort(arr);
 //
 //        //排序后时间
 //        Date date2=new Date();
@@ -29,8 +29,8 @@ public class MySort {
 
         //region 写代码用
 
-        int[] arr=new int[]{3,9,-1,10,20};
-        selectedSort(arr);
+        int[] arr=new int[]{0,1,3,9,-1,10,20};
+        insertSort(arr);
         for (int i=0;i< arr.length;i++) {
             System.out.print(arr[i] + "  ");
         }
@@ -118,11 +118,30 @@ public class MySort {
         }
     }
 
-    public static void selectedSortOptimize(int[] arr){
+    //endregion
 
+    //region 插入排序
+
+    /**
+     * 插入排序
+     * @param arr
+     */
+    public static void insertSort(int[] arr){
+
+        for (int i=1;i<arr.length;i++) {
+            int insertValue=arr[i];// 定义待插入的数
+            int insertValueIndex=i;//arr[1]的前面一个数的下标
+            //insertValue>=0 保证不越界 ,insertValue<arr[insertValue] 待插入的数还没有适当的位置 ，让arr[insertValue]后移
+            while(insertValueIndex>0 && insertValue<arr[insertValueIndex-1]){
+                arr[insertValueIndex]=arr[insertValueIndex-1];
+                insertValueIndex--;
+            }
+            //退出循环，说明已经找到插入位置
+           // if(insertValue+1==i)
+           arr[insertValueIndex]=insertValue;
+        }
     }
 
     //endregion
-
 
 }
