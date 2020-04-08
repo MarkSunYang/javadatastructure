@@ -1,6 +1,8 @@
 package com.sortcode;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class MySort {
@@ -29,12 +31,13 @@ public class MySort {
 
         //region 写代码用
 
-        int[] arr=new int[]{0,1,3,9,-1,10,20};
-        insertSort(arr);
-        for (int i=0;i< arr.length;i++) {
-            System.out.print(arr[i] + "  ");
-        }
+        int[] arr=new int[]{8,9,1,7,2,3,5,4,6,0};
+        HillSort1(arr);
+//        for (int i=0;i< arr.length;i++) {
+//            System.out.print(arr[i] + "  ");
+//        }
 
+        System.out.println(Arrays.toString(arr));
         //endregion
 
     }
@@ -144,4 +147,64 @@ public class MySort {
 
     //endregion
 
+    //region 希尔排序
+
+    /**
+     * 交换法
+     * @param arr
+     */
+    public static void HillSort1(int[] arr){
+
+        for (int gap=arr.length/2;gap>0;gap/=2){
+            for (int i=gap;i<arr.length;i++){
+                // 遍历各组中的所有元素（共五组，每组2个元素），步长5
+                for (int j=i-gap;j>=0;j-=gap){
+                    //如果当前元素大于加上步长后的元素，说明交换
+                    if(arr[j]>arr[j+gap]){
+                        int temp=arr[j];
+                        arr[j]=arr[j+gap];
+                        arr[j+gap]=temp;
+                    }
+                }
+            }
+        }
+
+        //第一轮排序，将10个数分成了5组
+
+        System.out.println(Arrays.toString(arr));
+    }
+
+    /**
+     * 移动法 ⭐
+     * @param arr
+     */
+    public static void HillSort2(int[] arr){
+
+        //增量gap，并足部缩小增量
+        for (int gap=arr.length/2;gap>0;gap/=2){
+            //从gap个元素
+            for (int i=gap;i<arr.length;i++){
+                int j=i;
+                int temp=arr[j];
+                if(arr[j]<arr[j-gap]){
+                    while (j-gap>=0 && temp<arr[j-gap]){
+                        //移动
+                        arr[j]=arr[j-gap];
+                        j-=gap;
+                    }
+                    //退出while，temp找到了插入的位置
+                    arr[j]=temp;
+                }
+            }
+        }
+    }
+
+    //endregion
+
+    //region
+    public static void QuickSort(int[] arr)
+    {
+
+    }
+    //endregion
 }
