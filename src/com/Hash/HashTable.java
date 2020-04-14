@@ -1,8 +1,37 @@
 package com.Hash;
 
+import java.util.Scanner;
+
 public class HashTable {
     public static void main(String[] args) {
+        HashTab hashTab=new HashTab(7);
+        String key="";
+        Scanner scanner=new Scanner(System.in);
+        while (true){
+            System.out.println("add:添加");
+            System.out.println("list:列表");
+            System.out.println("exit:退出");
+            key=scanner.next();
+            switch (key){
+                case"add":
+                    System.out.println("输入 id");
+                    int id =scanner.nextInt();
+                    System.out.println("输入姓名");
+                    String name=scanner.next();
+                    Emp emp=new Emp(id,name);
+                    hashTab.add(emp);
+                    break;
+                case"list":
+                    hashTab.list();
+                    break;
+                case"exit":
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    break;
+            }
 
+        }
     }
 }
 
@@ -17,7 +46,10 @@ class HashTab{
         //初始化
         empListArr=new EmpLinkedList[size];
 
-        //
+        //初始化每条链表
+        for (int i=0;i<size;i++){
+            empListArr[i]=new EmpLinkedList();
+        }
     }
 
     //添加 雇员
@@ -99,10 +131,16 @@ class EmpLinkedList{
         curEmp.next=emp;
     }
 
+//    public Emp findEmpById(int id){
+//        //empty?
+//
+//    }
+
     //遍历链表
     public void list(){
         if(head==null) {
             System.out.println("list is null");
+            return;
         }
         System.out.println("current list info:");
         Emp curEmp=head;
