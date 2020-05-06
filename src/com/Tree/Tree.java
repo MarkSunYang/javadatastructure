@@ -1,5 +1,7 @@
 package com.Tree;
 
+import java.util.TreeSet;
+
 public class Tree {
     public static void main(String[] args) {
         BinaryTree tree=new BinaryTree();
@@ -133,6 +135,11 @@ class HeroNode {
         return resNode;
     }
 
+    /**
+     * 中序查找
+     * @param no
+     * @return
+     */
     public HeroNode infixOrderSearch(int no){
         HeroNode resNode=null;
         if(this.left!=null){
@@ -151,6 +158,27 @@ class HeroNode {
     }
 
     /**
+     *
+     * @param no
+     * @return
+     */
+    public HeroNode postOrderSearch(int no){
+
+        HeroNode resNode=null;
+        if(this.left!=null){
+            resNode=postOrderSearch(no);
+        }
+        if(this.right!=null){
+            resNode=postOrderSearch(no);
+        }
+
+        if(this.no==no){
+            return this;
+        }
+        return resNode;
+    }
+
+    /**
      * 左中右
      */
     public void infixOrder(){
@@ -162,6 +190,15 @@ class HeroNode {
             this.right.infixOrder();
         }
     }
+
+    //region 删除
+    public void delNode(int no){
+        if(this.left!=null && this.left.no==no){
+            this.left=null;
+        }
+    }
+
+    //endregion
 
     /**
      *
