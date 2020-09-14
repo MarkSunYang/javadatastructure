@@ -16,4 +16,7 @@ public class HeroNode {
         public String toString() {
                 return "HeroNode [no=" + no + ",name=" + name + "nickname=" + nickName + "]";
                 }
+
+        public void preOrder() {
         }
+}
