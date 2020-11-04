@@ -1,93 +1,46 @@
 package com.Tree;
 
-import java.util.ArrayList;
-
+/**
+ * 二叉排序树：对于二叉排序树的任意一个非叶子节点，要求左子节点的值比前节点的值小，右子节点的值别当前节点的值大
+ * 如果有相同的值，可以将该节点放到左子节点或右子节点
+ */
 public class BSTTree {
-    public static void main(String[] args) {
-        int[] arr={7,3,10,12,5,1,9};
-        BST bst=new BST();
+    //插入节点
+    public void add(TreeNode node, int value) {
+        if (node == null) return;;
 
-        for (int i=0;i<arr.length;i++){
-            bst.add(new Node(arr[i]));
+        if (value <= node.element) {
+            //如果当前节点左子树为空，则将当前值赋给左子树，否则继续遍历
+           if(node.left==null){
+               node.left= node;
+               node.element=value;
+           }else{
+               add(node,value);
+           }
+        } else {
+            if(node.right==null){
+                node.right= node;
+                node.element=value;
+            }else{
+                add(node,value);
+            }
         }
-
-        //中序遍历
-        bst.infixOrder();
     }
 
-
-
-
-}
-class Node{
-    int value;
-    Node left;
-    Node right;
-
-    @Override
-    public String toString() {
-        return "Node [Value="+value+"]";
-    }
-
-    public Node(int value){
-        this.value=value;
-    }
+    //删除节点
 
     /**
-     * 添加节点
-     * 递归的形式添加节点，注意需要满足二叉排序树的要求
+     * 1.删除叶子节点 （1.找到该节点；2.找到该节点的父节点 还需要考虑是否有父节点 3.判断该节点是父节点的左子树还是右子树 ）
+     * 2.删除只有一颗子树的节点
+     *     2.1. targetnode没有节点直接删除
+     *     2.2. targetnode（可能是左右节点） 右节点（左或右）parent.left=target.left   parent.left=target.left 这里有四种情况
+     * 3.删除有两颗子树的节点
+     *    3.1. 找到该节点和该节点的父节点
+     *    3.2。从target的右子树找到最小的节点
+     *    3.3. 用一个临时变量，将最小的值保存 temp=12
+     *    targetnode.value=temp
      */
-    public  void  add(Node node){
-        if(node==null){
-            return;
-        }
 
-        //判断传入节点的值,和当前子树的根节点的值关系
-        if(node.value<this.value){
-            //当前节点左子节点为null
-            if(this.left==null){
-                this.left=node;
-            }else {
-                this.left.add(node);//递归的向左子树添加
-            }
-        }else {
-            //添加节点的值大于当前节点的值
-            if (this.right==null){
-                this.right=node;
-            }else{
-                this.right.add(node);
-            }
-        }
 
-    }
-
-    public void infixOrder(){
-        if(this.left!=null){
-            this.left.infixOrder();
-        }
-        System.out.println(this);
-        if(this.right!=null){
-            this.right.infixOrder();
-        }
-    }
 }
 
-class  BST{
-    private Node root;
-
-    public  void add(Node node){
-        if(root==null){
-            root=node;//root为空，root指向node
-        }else{
-            root.add(node);
-        }
-    }
-
-    public void infixOrder(){
-        if(root!=null){
-            root.infixOrder();
-        }else{
-            System.out.println("当前为空");
-        }
-    }
-}
