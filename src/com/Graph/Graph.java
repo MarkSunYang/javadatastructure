@@ -24,8 +24,7 @@ public class Graph {
         gp.addEdge(3, 4, 1);
 
         gp.show();
-
-        gp.DFS();
+        gp.bfs();
     }
 
     public ArrayList<String> vertexList;//顶点
@@ -36,12 +35,14 @@ public class Graph {
     /**
      * 参考：https://blog.csdn.net/qq_44973159/article/details/106355167
      * 邻接矩阵表示图
-     *      0   1   2   3   4
+     *      0   1   2   3   4           表示顶点
      * 0    0   1   1   1   1
-     * 1    0   1   1   0   1
-     * 2    1   1   0   0   1
+     * 1    1   0   1   1   0
+     * 2    1   1   0   0   1           矩阵表示边 1表示两个
      * 3    1   1   0   0   1
      * 4    1   0   1   1   0
+     *
+     * 表示顶点
      */
 
     public Graph(int n){
@@ -94,81 +95,83 @@ public class Graph {
 
     // region 图的深度优先遍历  Depth First Search
 
+    // 这里顶点是可以用一维数组表示，而顶点和顶点的关系需要用二维数组表示
     public boolean[] isVisited;// 记录被访问的节点
 
-    // 获取第一个邻接点的下标
-    public int getFirstNode(int index){
-        for (int i = 0; i < vertexList.size(); i++) {
-            if(edges[index][i]>0){
-                return i; //
-            }
-        }
-        return -1;
-    }
-
-    //根据前一个邻接节点的下标获取下一个邻接节点的下标
-    public int getNextNode(int v1,int v2){
-        for (int i = v2+1; i <vertexList.size() ; i++) {
-            if(edges[v1][i]>0)
+    // 根据前一个节点下标，获取下一个节点
+    public int getNextNodeIndex(int index,int next){
+        for (int i = next+1; i < vertexList.size() ; i++) {
+            if(edges[index][i]>0)
                 return i;
         }
         return -1;
     }
 
-    public void DFS(boolean[] isVisited,int i)
-    {
-        System.out.println(getValue(i)+ " -> ");// 先进行访问i
-        isVisited[i]=true;
-        int w=getFirstNode(i);//获得当前节点的第一个邻接点
-        while (w!=-1){
-            if(!isVisited[w]){
-                DFS(isVisited,w);//如果当前节点没被访问过，把当前节点设置为根节点，继续访问
-            }
-            w=getNextNode(i,w);//如果w被访问过了，则获取它的下一个节点
+    //根据当前节点获取下一个节点的下标
+    public int getFirstNodeIndex(int index){
+        //vertexList 是顶点 [顶点的下标][与顶点相连顶点的下标]
+        for (int i = 0; i < vertexList.size() ; i++) {
+            if(edges[i][index]>0)
+                return i;
         }
+        return -1;
     }
 
-    //回到第一步
-    public void DFS(){
-        //遍历所有节点进行DFS
-        for (int i = 0; i <vertexNum() ; i++) {
-            if(!isVisited[i])
-                DFS(isVisited,i);
-        }
-    }
-
-    // endregion
-
-    // region 图的广度优先遍历  Broad First Search
-
-    public void BFS(boolean[] isVisited, int i){
-        int u;//队列的头节点
-        int w;//邻接节点
-        LinkedList queue =new LinkedList();// 使用队列记录访问顺序
+    public void dfs(boolean[] isVisited,int i){
         System.out.println(getValue(i)+" -> ");
         isVisited[i]=true;
-        queue.addLast(i);
-        while(!queue.isEmpty()){
-            //取出队列头节点下标
-            u=(Integer) queue.removeFirst();
-            w=getFirstNode(u);
-            while (w!=-1){
-                if(!isVisited[w]){
-                    System.out.println(getValue(w)+" -> ");
-                    isVisited[w]=true;
-                    queue.addLast(w);
-                }
-                w=getNextNode(u,w);//继续找下一个节点
+        int nextNode=getFirstNodeIndex(i);//查找第一个邻接点
+        while(nextNode!=-1){
+            if(!isVisited[nextNode]){
+                dfs(isVisited,nextNode);
+            }
+            //如果nextNode已经被访问过  比如 i为A，nextNode=B 如果B已经被访问过，我们需要查找C
+            nextNode=getNextNodeIndex(i,nextNode);
+        }
+    }
+
+    public void dfs(){
+        for (int i = 0; i <vertexNum() ; i++) {
+            if(!isVisited[i]){
+                dfs(isVisited,i);
             }
         }
     }
 
-    public void BFS(){
+    // endregion
+
+    // region 图的广度优先遍历
+    public void  bfs(){
         for (int i = 0; i <vertexNum() ; i++) {
-            if(!isVisited[i])
-                BFS(isVisited,i);
+            if(!isVisited[i]){
+                bfs(isVisited,i);
+            }
+        }
+    }
+
+    public void bfs(boolean[] isVisited, int i){
+        int u;//头结点对应的下标
+        int w;//邻接节点的下标
+        LinkedList queue=new LinkedList();
+        System.out.println(getValue(i)+" -> ");
+
+        isVisited[i]=true; //标记为已访问
+        queue.addLast(i);
+        while (!queue.isEmpty())
+        {
+            u=(Integer)queue.removeFirst(); //取出队列的头结点
+            w=getFirstNodeIndex(u);
+            while (w!=-1){
+                if(!isVisited[w]){
+                    System.out.println(getValue(w)+" => ");
+                    isVisited[w]=true;
+                    queue.addLast(w);//入队
+                }
+                w=getNextNodeIndex(u,w);
+            }
         }
     }
 
     // endregion
+
 }
